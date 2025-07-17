@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.gateio.ws/api/v4/wallet/total_balance?currency=BTC_USDT
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/json
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+      Key:
+      - "<API_KEY>"
+      Sign:
+      - 640d5f2f717bd989462bbf19bafdbfd9f5c14ef8769f4cd634926e78d02fc86947c32141d8853d5bf80a553bb8114fe3f21111c3dcae16ace3da5c5b1644a866
+      Timestamp:
+      - '1752745896'
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Thu, 17 Jul 2025 09:51:38 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      X-Out-Time:
+      - '1752745898498035'
+      X-Gate-Trace-Id:
+      - 6878c7aa0dae7f8afa535d8b19ab64e1
+      X-In-Time:
+      - '1752745898493860'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"label":"FORBIDDEN","message":"Request API key does not have wallet permission"}'
+  recorded_at: Thu, 17 Jul 2025 09:51:38 GMT
+recorded_with: VCR 6.3.1
