@@ -1,4 +1,9 @@
-# Gate/CHANGELOG.txt
+# gate.rb/CHANGELOG
+
+## [0.2.1] - 2026-08-22
+* + LICENSE
+* ~ gate.rb.gemspec: + 'LICENSE'
+* ~ Gate::VERSION: /0.2.0/0.2.1/
 
 ## [0.2.0] - 2025-07-17
 * + Gate::Configuration
