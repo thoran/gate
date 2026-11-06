@@ -1,37 +1,146 @@
-# gate.rb/CHANGELOG
+# gate/CHANGELOG
 
-## [0.2.2] - 2026-11-06
-* ~ test/helper.rb: + skip_webmocks_http_rb_adapter, as in eodhd 0.19.11. webmock's http_rb adapter took http.rb's lib/http.rb for the http gem's, and the suite stopped before loading.
-* ~ Gate::Configuration: - the comma after attr_accessor's :debug, which made the def configure after it one more accessor name, so that #configure read an attribute rather than yielding.
-* ~ Gate::Configuration#initialize: debug defaults to false, as reset! has it.
-* ~ test/Gate/Configuration_test.rb: must_equal and must_be_nil in place of RSpec's to eq; - api_base_url, which nothing has, the host being Gate::V4::Client::API_HOST; + #configure yields the configuration.
-* ~ Gate::VERSION: /0.2.1/0.2.2/
+## 20261106
 
-## [0.2.1] - 2026-08-22
-* + LICENSE
-* ~ gate.rb.gemspec: + 'LICENSE'
-* ~ Gate::VERSION: /0.2.0/0.2.1/
+0.2.3: /gate\.rb/gate/, the repository renamed; put the CHANGELOG in the standard form; + VERSION and gemspec tests.
 
-## [0.2.0] - 2025-07-17
-* + Gate::Configuration
-* ~ Gate::V4::Client#initialize: Use optional configuration instance and class methods.
-* ~ Gate::V4::Client#encoded_payload: Encode empty string for authenticated GET requests.
-* ~ Gate::V4::Client#message: Moved query_string to own method...
-* + Gate::V4::Client#query_string
-* + Gate::V4::Client#spot_my_trades: Reintroduced once encoded_payload() was fixed.
-* + Gate::V4::Client#wallet_total_balance
-* ~ Gate::V4::Client#handle_response: + 403 (insufficient permission)
-* + Gate::InsufficientPermissionError
-* ~ test/Gate/V4/Client/test_private_endpoints: + #spot_my_trades, #wallet_total_balance
-* + test/Gate/Configuration_test
-* ~ Gate::VERSION: 0.1.0 --> 0.2.0
-* ~ gate.rb.gemspec
+1. ~ gate.rb.gemspec: spec.homepage: /http/https/, and /gate\.rb/gate/, the repository renamed.
+2. ~ README.md: the fork URL: /gate\.rb/gate/, likewise.
+3. + gate.rb.gemspec: spec.metadata: bug_tracker_uri, changelog_uri, documentation_uri and source_code_uri, each in the renamed repository.
+4. The gem keeps its name, gate.rb, gate being taken on RubyGems.
+5. ~ CHANGELOG: /gate\.rb/gate/ in the title, after the repository; a ## YYYYMMDD heading for each date, a summary line and numbered items, in place of Keep a Changelog's version headings and stars.
+6. + CHANGELOG: 0.0.0 to 0.0.11, the revisions of lib/GateIo.rb from before the repository, each with the version and dates its header gives.
+7. ~ LICENSE: /2025-2026/2024-2026/, the copyright running from 0.0.0, in 2024.
+8. + test/VERSION_test.rb: Gate::VERSION is three numbers and matches the newest entry here.
+9. + test/gemspec_test.rb: gate.rb.gemspec is valid, is named gate.rb, pins no date, takes its version from Gate::VERSION, declares http.rb, ships itself, and links only to the repository.
+10. ~ Gate::VERSION: /0.2.2/0.2.3/
 
-## [0.1.0] - 2025-07-14
-* /GateIo/Gate/
-* Split up single GateIo.rb file into Gate/V4/Client.rb, Gate/Client.rb, Hash/stringify_values.rb, etc.
-* /require 'Hash\/to_parameter_string'/require 'Hash\/x_www_form_url_encode'/
-* + ./test
-* - Gate::V4::Client#spot_my_trades() because I couldn't immediately get the test to work.
-* + Gate::V4::Client#handle_response
-* ~ Gate::V4::Client: All methods now use handle_response.
+0.2.2: Load the suite past webmock's http_rb adapter; fix Gate::Configuration#configure, and default debug to false.
+
+1. ~ test/helper.rb: + skip_webmocks_http_rb_adapter, as in eodhd 0.19.11. webmock's http_rb adapter took http.rb's lib/http.rb for the http gem's, and the suite stopped before loading.
+2. ~ Gate::Configuration: - the comma after attr_accessor's :debug, which made the def configure after it one more accessor name, so that #configure read an attribute rather than yielding.
+3. ~ Gate::Configuration#initialize: debug defaults to false, as reset! has it.
+4. ~ test/Gate/Configuration_test.rb: must_equal and must_be_nil in place of RSpec's to eq; - api_base_url, which nothing has, the host being Gate::V4::Client::API_HOST; + #configure yields the configuration.
+5. ~ Gate::VERSION: /0.2.1/0.2.2/
+
+
+## 20260822
+
+0.2.1: + LICENSE
+
+1. + LICENSE
+2. ~ gate.rb.gemspec: + 'LICENSE'
+3. ~ Gate::VERSION: /0.2.0/0.2.1/
+
+
+## 20250717
+
+0.2.0: + Gate::Configuration, + Gate::V4::Client#spot_my_trades, #wallet_total_balance; raise a 403 as a Gate::InsufficientPermissionError.
+
+1. + Gate::Configuration
+2. ~ Gate::V4::Client#initialize: Use optional configuration instance and class methods.
+3. ~ Gate::V4::Client#encoded_payload: Encode empty string for authenticated GET requests.
+4. ~ Gate::V4::Client#message: Moved query_string to own method...
+5. + Gate::V4::Client#query_string
+6. + Gate::V4::Client#spot_my_trades: Reintroduced once encoded_payload() was fixed.
+7. + Gate::V4::Client#wallet_total_balance
+8. ~ Gate::V4::Client#handle_response: + 403 (insufficient permission)
+9. + Gate::InsufficientPermissionError
+10. ~ test/Gate/V4/Client/test_private_endpoints: + #spot_my_trades, #wallet_total_balance
+11. + test/Gate/Configuration_test
+12. ~ Gate::VERSION: 0.1.0 --> 0.2.0
+13. ~ gate.rb.gemspec
+
+
+## 20250714
+
+0.1.0: /GateIo/Gate/, + gemspec; split into a file per class; + test/.
+
+1. /GateIo/Gate/
+2. Split up single GateIo.rb file into Gate/V4/Client.rb, Gate/Client.rb, Hash/stringify_values.rb, etc.
+3. /require 'Hash\/to_parameter_string'/require 'Hash\/x_www_form_url_encode'/
+4. + ./test
+5. - Gate::V4::Client#spot_my_trades() because I couldn't immediately get the test to work.
+6. + Gate::V4::Client#handle_response
+7. ~ Gate::V4::Client: All methods now use handle_response.
+
+
+## 20250424, 25
+
+0.0.11: ~ GateIo::V4::Client#spot_orders: send only the arguments given, as strings; reset the timestamp after each request.
+
+1. + lib/GateIo.rb: Hash#stringify_values
+2. ~ GateIo::V4::Client#spot_orders: the arguments with nils dropped and every value a string.
+3. ~ GateIo::V4::Client#do_request: @timestamp = nil after each request. The timestamp is memoised, so every later request through the same client was signed with the first one's.
+
+
+## 20250207
+
+0.0.10: /class GateIo/module GateIo/, + GateIo::Client, + GateIo::V4::Client#get, #post
+
+1. ~ lib/GateIo.rb: /class GateIo/module GateIo/
+2. + GateIo::Client, a subclass of GateIo::V4::Client.
+3. + GateIo::V4::Client#get, #post: each a #do_request with its verb.
+4. ~ GateIo::V4::Client#spot_currencies, #spot_currency_pairs, #spot_tickers, #spot_order_book, #spot_trades, #spot_candlesticks, #spot_my_trades, #spot_time: through #get.
+5. ~ GateIo::V4::Client#spot_orders: through #post.
+6. ~ GateIo::V4::Client#do_request: HTTP.send with the verb, in place of a case expression.
+
+
+## 20250127, 0207
+
+0.0.9: + GateIo::V4::Client#spot_orders
+
+1. + GateIo::V4::Client#spot_orders: POST /spot/orders, taking currency_pair:, side: and amount:, and optionally text:, type:, account:, price:, time_in_force: and iceberg:.
+2. ~ GateIo::V4::Client#do_request: a POST through HTTP.post where verb: is 'POST'.
+3. ~ GateIo::V4::Client#message: + verb:; no query string for a POST, and any other verb raises.
+4. ~ GateIo::V4::Client#encoded_payload: + args; the SHA-512 of the arguments as JSON, nils dropped, in place of that of an empty string.
+5. ~ GateIo::V4::Client#headers: /Content-type/Content-Type/
+
+
+## 20250127
+
+0.0.8: + GateIo::V4::Client#spot_time; ~ #do_request: + verb:
+
+1. + GateIo::V4::Client#spot_time: GET /spot/time.
+2. ~ GateIo::V4::Client#do_request: + verb:, which every API method passes as 'GET'.
+3. ~ lib/GateIo.rb: + Notes: the API methods are in the order the documentation gives them.
+
+
+## 20241027
+
+0.0.7: + GateIo::V4::Client#spot_my_trades
+
+1. + GateIo::V4::Client#spot_my_trades: GET /spot/my_trades, taking currency_pair:, limit:, page:, order_id:, account:, from: and to:, all optional.
+
+0.0.6: + GateIo::V4::Client#spot_candlesticks
+
+1. + GateIo::V4::Client#spot_candlesticks: GET /spot/candlesticks, taking currency_pair:, and optionally limit:, from:, to: and interval:.
+
+0.0.5: + GateIo::V4::Client#spot_trades
+
+1. + GateIo::V4::Client#spot_trades: GET /spot/trades, taking currency_pair:, and optionally limit:, last_id:, reverse:, from:, to: and page:.
+
+0.0.4: + GateIo::V4::Client#spot_order_book
+
+1. + GateIo::V4::Client#spot_order_book: GET /spot/order_book, taking currency_pair:, and optionally interval:, limit: and with_id:.
+
+0.0.3: + GateIo::V4::Client#spot_tickers
+
+1. + GateIo::V4::Client#spot_tickers: GET /spot/tickers, taking currency_pair: and timezone:, both optional.
+
+0.0.2: + GateIo::V4::Client#spot_currency_pairs
+
+1. + GateIo::V4::Client#spot_currency_pairs: GET /spot/currency_pairs, or /spot/currency_pairs/{currency_pair} given one.
+
+0.0.1: ~ GateIo::V4::Client#spot_currencies: + currency
+
+1. ~ GateIo::V4::Client#spot_currencies: + currency, optional, for GET /spot/currencies/{currency}.
+
+
+## 20241025, 27
+
+0.0.0: + GateIo::V4::Client#spot_currencies
+
+1. + lib/GateIo.rb: class GateIo, GateIo::V4::Client.
+2. + GateIo::V4::Client#spot_currencies: GET /spot/currencies.
+3. + GateIo::V4::Client#do_request: a GET to https://api.gateio.ws/api/v4, signed with an HMAC-SHA512 of the verb, path, query string, payload hash and timestamp, sent in the KEY, SIGN and Timestamp headers; the response parsed as JSON.

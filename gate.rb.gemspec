@@ -11,8 +11,15 @@ Gem::Specification.new do |spec|
 
   spec.author = 'thoran'
   spec.email = 'code@thoran.com'
-  spec.homepage = 'http://github.com/thoran/gate.rb'
+  spec.homepage = 'https://github.com/thoran/gate'
   spec.license = 'MIT'
+
+  spec.metadata = {
+    'bug_tracker_uri' => 'https://github.com/thoran/gate/issues',
+    'changelog_uri' => 'https://github.com/thoran/gate/blob/master/CHANGELOG',
+    'source_code_uri' => 'https://github.com/thoran/gate',
+    'documentation_uri' => 'https://github.com/thoran/gate/blob/master/README.md',
+  }
 
   spec.required_ruby_version = '>= 2.7'
   spec.require_paths = ['lib']
