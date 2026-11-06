@@ -1,5 +1,12 @@
 # gate.rb/CHANGELOG
 
+## [0.2.2] - 2026-11-06
+* ~ test/helper.rb: + skip_webmocks_http_rb_adapter, as in eodhd 0.19.11. webmock's http_rb adapter took http.rb's lib/http.rb for the http gem's, and the suite stopped before loading.
+* ~ Gate::Configuration: - the comma after attr_accessor's :debug, which made the def configure after it one more accessor name, so that #configure read an attribute rather than yielding.
+* ~ Gate::Configuration#initialize: debug defaults to false, as reset! has it.
+* ~ test/Gate/Configuration_test.rb: must_equal and must_be_nil in place of RSpec's to eq; - api_base_url, which nothing has, the host being Gate::V4::Client::API_HOST; + #configure yields the configuration.
+* ~ Gate::VERSION: /0.2.1/0.2.2/
+
 ## [0.2.1] - 2026-08-22
 * + LICENSE
 * ~ gate.rb.gemspec: + 'LICENSE'

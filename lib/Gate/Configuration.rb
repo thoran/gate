@@ -22,7 +22,7 @@ module Gate
     attr_accessor\
       :api_key,
       :api_secret,
-      :debug,
+      :debug
 
     def configure
       yield(self)
@@ -36,7 +36,7 @@ module Gate
 
     private
 
-    def initialize(api_key: nil, api_secret: nil, debug: nil)
+    def initialize(api_key: nil, api_secret: nil, debug: false)
       @api_key = api_key
       @api_secret = api_secret
       @debug = debug
