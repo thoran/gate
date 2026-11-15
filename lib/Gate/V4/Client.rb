@@ -181,11 +181,29 @@ module Gate
         handle_response(response)
       end
 
+      attr_accessor\
+        :api_key,
+        :api_secret,
+        :debug
+
       private
 
-      def initialize(api_key: nil, api_secret: nil, configuration: nil)
-        @api_key = (api_key || configuration&.api_key || Gate.configuration.api_key).encode('UTF-8')
-        @api_secret = (api_secret || configuration&.api_secret || Gate.configuration.api_secret).encode('UTF-8')
+      def initialize(api_key: nil, api_secret: nil, debug: false)
+        @api_key = api_key
+        @api_secret = api_secret
+        @debug = debug
+        yield(self) if block_given?
+      end
+
+      def validate_args(args)
+        missing_args = []
+        args.each do |arg_name, value|
+          missing_args << arg_name unless value
+        end
+        return if missing_args.empty?
+        aggregate_error = missing_args.join(', ')
+        copula = missing_args.count > 1 ? 'are' : 'is'
+        raise ArgumentError, "#{aggregate_error} #{copula} missing."
       end
 
       def full_path(path)
@@ -230,7 +248,7 @@ module Gate
       end
 
       def signature(message)
-        OpenSSL::HMAC.hexdigest('SHA512', @api_secret, message)
+        OpenSSL::HMAC.hexdigest('SHA512', @api_secret.encode('UTF-8'), message)
       end
 
       def request_string(path)
@@ -241,13 +259,14 @@ module Gate
         {
           'Accept' => 'application/json',
           'Content-Type' => 'application/json',
-          'KEY' => @api_key,
+          'KEY' => @api_key.encode('UTF-8'),
           'SIGN' => signature,
           'Timestamp' => timestamp,
         }
       end
 
       def do_request(verb:, path:, args: {})
+        validate_args(api_key: @api_key, api_secret: @api_secret)
         message = message(verb: verb, path: path, args: args)
         signature = signature(message)
         response = HTTP.send(verb.to_s.downcase, request_string(path), args, headers(signature))

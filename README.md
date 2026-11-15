@@ -24,12 +24,41 @@ $ gem install gate.rb
 
 ## Usage
 
+### Setup
+
 ```ruby
 client = Gate::Client.new(
   api_key: 'your_api_key',
   api_secret: 'your_api_secret',
 )
 ```
+
+Everything a client uses is given to it: `api_key:`, `api_secret:` and `debug:`. Each has a
+setter of its own, and the client is yielded while it is being built, so these are the same:
+
+```ruby
+client = Gate::Client.new do |c|
+  c.api_key = 'your_api_key'
+  c.api_secret = 'your_api_secret'
+end
+
+client = Gate::Client.new
+client.api_key = 'your_api_key'
+client.api_secret = 'your_api_secret'
+```
+
+The client keeps nothing in common with any other, and reads nothing from the environment
+or from a file: where the settings come from is the program's business. Credentials not
+given raise at the first request, before anything is sent, naming each of them:
+
+```ruby
+Gate::Client.new(api_key: 'your_api_key').spot_time
+# => ArgumentError: api_secret is missing.
+```
+
+Before 0.3.0 the settings could be declared once with `Gate.configure`, and every client
+fell back upon them, or be given as a `Gate::Configuration` under `configuration:`. Pass them
+to each client as keywords instead.
 
 ### Public API Methods
 

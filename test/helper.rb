@@ -36,10 +36,3 @@ VCR.configure do |config|
     match_requests_on: [:method, :uri, :body]
   }
 end
-
-class Minitest::Test
-  def before_setup
-    super
-    Gate.reset_configuration!
-  end
-end

@@ -1,5 +1,23 @@
 # gate/CHANGELOG
 
+## 20261115
+
+0.3.0: ~ Gate::Client#initialize: - configuration:; - Gate.configure, Gate::Configuration.
+
+1. ~ Gate::V4::Client#initialize: + debug:, - configuration:. Nothing falls back upon Gate.configuration, under which a client worked or failed according to what had run before it; and a value arriving two ways wanted a rule for which won.
+2. ~ Gate::V4::Client#initialize: It yields the client being built.
+3. + Gate::V4::Client#api_key, #api_secret, #debug, and their setters.
+4. + Gate::V4::Client#validate_args: The credentials not given raise ArgumentError naming each of them, rather than a NoMethodError upon nil when the client is built.
+5. ~ Gate::V4::Client#do_request: The credentials are validated before the request is signed; #signature and #headers encode them as UTF-8, as #initialize did.
+6. - lib/Gate/Configuration.rb: Gate::Configuration, Gate.configure, .configuration, .configuration= and .reset_configuration!.
+7. ~ lib/gate.rb: - require 'Gate/Configuration'.
+8. - test/Gate/Configuration_test.rb
+9. + test/Gate/V4/Client/test_initialize.rb: The debug: keyword, the setters and the block set a client; it defaults to nothing; missing credentials raise naming each, before any request; Gate keeps no configuration.
+10. ~ test/helper.rb: - the reset of Gate.configuration before each test.
+11. ~ README.md: + Setup section.
+12. ~ Gate::VERSION: /0.2.3/0.3.0/
+
+
 ## 20261106
 
 0.2.3: /gate\.rb/gate/, the repository renamed; put the CHANGELOG in the standard form; + VERSION and gemspec tests.
