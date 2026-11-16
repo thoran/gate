@@ -269,9 +269,9 @@ module Gate
         validate_args(api_key: @api_key, api_secret: @api_secret)
         message = message(verb: verb, path: path, args: args)
         signature = signature(message)
-        response = HTTP.send(verb.to_s.downcase, request_string(path), args, headers(signature))
+        HTTP.send(verb.to_s.downcase, request_string(path), args, headers(signature))
+      ensure
         @timestamp = nil
-        response
       end
 
       def get(path:, args: {})

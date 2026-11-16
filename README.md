@@ -70,10 +70,10 @@ client.spot_currencies
 client.spot_currencies('BTC')
 
 # Get all symbol/currency pairs
-client.currency_pairs
+client.spot_currency_pairs
 
 # Get one symbol/currency pair
-client.currency_pairs('BTC_USDT')
+client.spot_currency_pairs('BTC_USDT')
 
 # Get all ticker
 client.spot_tickers
@@ -84,24 +84,30 @@ client.spot_tickers(currency_pair: 'BTC_USDT')
 # Get order book for a symbol/currency pair
 client.spot_order_book(currency_pair: 'BTC_USDT')
 
-# Get order book for a symbol/currency pair
+# Get trades for a symbol/currency pair
 client.spot_trades(currency_pair: 'BTC_USDT')
 
 # Get OHLC for a symbol/currency pair
 client.spot_candlesticks(currency_pair: 'BTC_USDT')
 
 # Get OHLC for a symbol for specific period
-client.spot_candlesticks('BTC_USDT', interval: '1d', start_time: 1648995780000, end_time: 1649082180000)
+client.spot_candlesticks(currency_pair: 'BTC_USDT', interval: '1d', from: 1648995780, to: 1649082180)
 
 # Get server time
 client.spot_time
 ```
 
-### A Private API Method
+### Private API Methods
 
 ```ruby
-# Get the authenticated user's trades for specific symbol/currency pair
-client.spot_orders(currency_pair: 'BTC_USDT')
+# Get the authenticated user's balance
+client.wallet_total_balance(currency: 'USDT')
+
+# Place an order for a symbol/currency pair
+client.spot_orders(currency_pair: 'BTC_USDT', side: 'buy', amount: '0.0001', price: '100000')
+
+# Get the authenticated user's trades for a symbol/currency pair
+client.spot_my_trades(currency_pair: 'BTC_USDT')
 ```
 
 ## Contributing

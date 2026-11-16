@@ -1,5 +1,15 @@
 # gate/CHANGELOG
 
+## 20261116
+
+0.3.1: Fix a failed request's timestamp being reused by the next.
+
+1. ~ Gate::V4::Client#do_request: The timestamp is reset in an ensure. A request which raised left it memoised, and the next request was signed with a stale time.
+2. + test/Gate/V4/Client/test_do_request.rb: After a request raises, the next carries a fresh timestamp.
+3. ~ README.md: The examples call spot_currency_pairs, not currency_pairs; spot_candlesticks with keywords and from:/to: in seconds; and spot_orders as placing an order, with its required side: and amount:. + wallet_total_balance and spot_my_trades.
+4. ~ Gate::VERSION: /0.3.0/0.3.1/
+
+
 ## 20261115
 
 0.3.0: ~ Gate::Client#initialize: - configuration:; - Gate.configure, Gate::Configuration.
