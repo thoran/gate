@@ -9,6 +9,7 @@
 
 gem 'http.rb'; require 'http.rb'
 require 'json'
+require 'logger'
 require 'openssl'
 
 require 'Gate/Error'
@@ -20,6 +21,7 @@ module Gate
     class Client
 
       API_HOST = 'api.gateio.ws'
+      CREDENTIAL_HEADERS = %w{KEY}
 
       class << self
         def path_prefix
@@ -184,14 +186,16 @@ module Gate
       attr_accessor\
         :api_key,
         :api_secret,
-        :debug
+        :debug,
+        :logger
 
       private
 
-      def initialize(api_key: nil, api_secret: nil, debug: false)
+      def initialize(api_key: nil, api_secret: nil, debug: false, logger: nil)
         @api_key = api_key
         @api_secret = api_secret
         @debug = debug
+        @logger = logger
         yield(self) if block_given?
       end
 
@@ -269,7 +273,9 @@ module Gate
         validate_args(api_key: @api_key, api_secret: @api_secret)
         message = message(verb: verb, path: path, args: args)
         signature = signature(message)
-        HTTP.send(verb.to_s.downcase, request_string(path), args, headers(signature))
+        headers = headers(signature)
+        log_request(verb: verb, request_string: request_string(path), args: args, headers: headers) if use_logging?
+        HTTP.send(verb.to_s.downcase, request_string(path), args, headers)
       ensure
         @timestamp = nil
       end
@@ -282,10 +288,48 @@ module Gate
         do_request(verb: 'POST', path: path, args: args)
       end
 
+      def use_logging?
+        !@logger.nil?
+      end
+
+      def log_args?(args)
+        !args.values.all?(&:nil?)
+      end
+
+      def log_request(verb:, request_string:, args:, headers:)
+        log_string = "#{verb} #{request_string}\n"
+        if log_args?(args)
+          log_string << "  Args: #{args}\n"
+        end
+        log_string << "  Headers: #{masked(headers)}\n"
+        logger.info(log_string)
+      end
+
+      def masked(headers)
+        headers.to_h{|name, value| [name, CREDENTIAL_HEADERS.include?(name) ? '[FILTERED]' : value]}
+      end
+
+      def log_response(code:, message:, body:)
+        log_string = "Code: #{code}\n"
+        log_string << "Message: #{message}\n"
+        log_string << "Body: #{body}\n"
+        logger.info(log_string)
+      end
+
+      def log_error(code:, message:, body:)
+        log_string = "Code: #{code}\n"
+        log_string << "Message: #{message}\n"
+        log_string << "Body: #{body}\n"
+        logger.error(log_string)
+      end
+
       def handle_response(response)
         if response.success?
-          JSON.parse(response.body)
+          parsed_body = JSON.parse(response.body)
+          log_response(code: response.code, message: response.message, body: response.body) if use_logging?
+          parsed_body
         else
+          log_error(code: response.code, message: response.message, body: response.body) if use_logging?
           case response.code.to_i
           when 400
             raise Gate::InvalidRequestError.new(

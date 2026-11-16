@@ -2,6 +2,19 @@
 
 ## 20261116
 
+0.4.0: + Gate::V4::Client#logger, and logging of requests and responses.
+
+1. ~ Gate::V4::Client#initialize: + logger:.
+2. + Gate::V4::Client#logger, and its setter.
+3. + Gate::V4::Client::CREDENTIAL_HEADERS: KEY.
+4. + Gate::V4::Client#use_logging?, #log_args?, #log_request, #masked, #log_response, #log_error
+5. ~ Gate::V4::Client#do_request: The request is logged, with the key written as [FILTERED].
+6. ~ Gate::V4::Client#handle_response: A response is logged, as info where it succeeded and as an error where it did not.
+7. + test/Gate/V4/Client/test_logging.rb: Requests, responses and errors are logged; the key is masked and the signature is not.
+8. ~ test/Gate/V4/Client/test_initialize.rb: The logger: keyword sets a client's logger, which defaults to nil.
+9. ~ README.md: + Logging section.
+10. ~ Gate::VERSION: /0.3.2/0.4.0/
+
 0.3.2: ~ gemspec: + Rakefile, + test fixtures
 
 1. ~ gate.rb.gemspec: spec.files: + Rakefile.

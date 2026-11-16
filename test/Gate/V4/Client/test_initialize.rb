@@ -6,11 +6,17 @@ describe Gate::V4::Client do
       _(Gate::V4::Client.new(debug: true).debug).must_equal(true)
     end
 
-    it "defaults to no credentials and no debugging" do
+    it "takes logger as a keyword" do
+      logger = Object.new
+      _(Gate::V4::Client.new(logger: logger).logger).must_be_same_as(logger)
+    end
+
+    it "defaults to no credentials, no debugging and no logger" do
       client = Gate::V4::Client.new
       _(client.api_key).must_be_nil
       _(client.api_secret).must_be_nil
       _(client.debug).must_equal(false)
+      _(client.logger).must_be_nil
     end
 
     it "yields the client being built" do

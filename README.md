@@ -33,7 +33,7 @@ client = Gate::Client.new(
 )
 ```
 
-Everything a client uses is given to it: `api_key:`, `api_secret:` and `debug:`. Each has a
+Everything a client uses is given to it: `api_key:`, `api_secret:`, `debug:` and `logger:`. Each has a
 setter of its own, and the client is yielded while it is being built, so these are the same:
 
 ```ruby
@@ -59,6 +59,23 @@ Gate::Client.new(api_key: 'your_api_key').spot_time
 Before 0.3.0 the settings could be declared once with `Gate.configure`, and every client
 fell back upon them, or be given as a `Gate::Configuration` under `configuration:`. Pass them
 to each client as keywords instead.
+
+### Logging
+
+A client logs when it has somewhere to log to, and not at all when it does not. Hand it any
+object answering to `#info` and `#error`; the standard library's `Logger` will do.
+
+A request is logged with its headers, the key being written as `[FILTERED]`.
+
+```ruby
+require 'logger'
+
+client = Gate::Client.new(
+  api_key: 'your_api_key',
+  api_secret: 'your_api_secret',
+  logger: Logger.new($stdout)
+)
+```
 
 ### Public API Methods
 
