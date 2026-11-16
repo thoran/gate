@@ -27,6 +27,11 @@ describe 'gate.rb.gemspec' do
     _(spec.files).must_include('gate.rb.gemspec')
   end
 
+  it "ships the Rakefile and the cassettes with the tests" do
+    _(spec.files).must_include('Rakefile')
+    _(spec.files).must_include('test/fixtures/vcr_cassettes/v4/spot/time.yml')
+  end
+
   it "links the homepage and each metadata link to the repository" do
     links = [spec.homepage] + spec.metadata.values
     _(spec.metadata.keys.sort).must_equal(%w{bug_tracker_uri changelog_uri documentation_uri source_code_uri})

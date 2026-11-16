@@ -2,6 +2,13 @@
 
 ## 20261116
 
+0.3.2: ~ gemspec: + Rakefile, + test fixtures
+
+1. ~ gate.rb.gemspec: spec.files: + Rakefile.
+2. ~ gate.rb.gemspec: spec.files: Dir['test/**/*.{rb,yml}'], not Dir['test/**/*.rb'], so that the tests ship with the cassettes they play back.
+3. ~ test/gemspec_test.rb: The Rakefile and the cassettes ship.
+4. ~ Gate::VERSION: /0.3.1/0.3.2/
+
 0.3.1: Fix a failed request's timestamp being reused by the next.
 
 1. ~ Gate::V4::Client#do_request: The timestamp is reset in an ensure. A request which raised left it memoised, and the next request was signed with a stale time.
